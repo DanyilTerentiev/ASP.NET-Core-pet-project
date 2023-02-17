@@ -1,0 +1,46 @@
+@model IList<TaskAuthenticationAuthorization.Models.User>
+
+@{
+    ViewData["Title"] = "Admin tab";
+}
+
+<h1>Index</h1>
+
+<form asp-action="Index" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>BuyerType</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < @Model.Count(); i++)
+                {
+                    <tr>
+                        <td>
+                            <input asp-for="@Model[i].Id" class="form-control" readonly />
+                        </td>
+                        <td>
+                            <input asp-for="@Model[i].Name" class="form-control" readonly />
+                        </td>
+                        <td>
+                            <select asp-for="@Model[i].RoleId" asp-items="ViewBag.Roles" class="form-control"></select>
+                        </td>
+                        <td>
+                            <select asp-for="@Model[i].BuyerType" asp-items="Html.GetEnumSelectList<BuyerType>()" class="form-control"></select>
+                        </td>
+                    </tr>
+                }
+        </tbody>
+    </table>
+    <input type="submit" value="Save" class="btn-primary" />
+</form>
+@if(TempData["updated"]?.ToString() == "True")
+{
+    <div class="alert-success">
+        <strong>Users were successfully updated.
+    </div>
+}
